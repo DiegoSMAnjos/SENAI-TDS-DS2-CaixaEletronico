@@ -1,5 +1,7 @@
-create database db_voluntario;
-use db_voluntario;
+CREATE database db_caixa_eletronico;
+
+USE db_caixa_eletronico;
+
 create table tb_voluntario2(
 	id int not null auto_increment primary key,
     nome varchar(30),

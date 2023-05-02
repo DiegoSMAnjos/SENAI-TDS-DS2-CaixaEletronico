@@ -3,17 +3,19 @@ import mysql.connector
 
 app = QtWidgets.QApplication([])
 home = uic.loadUi("view/home.ui")
+
 sucesso = uic.loadUi("view/sucesso.ui")
 lista = uic.loadUi("view/lista.ui")
 
 home.show()
 
 conexao = mysql.connector.connect(
-            host = "localhost",
-            user = "root",
-            passwd = "2wNk#kYWFH@$2D3RcV5!",
-            database = "db_voluntario")
+    host="localhost",
+    user="root",
+    passwd="2wNk#kYWFH@$2D3RcV5!",
+    database="db_caixa_eletronico")
 
+# Teste
 def cadastrar():
     nome = home.le_nome.text()
     idade = home.le_idade.text()
@@ -25,33 +27,20 @@ def cadastrar():
         turno = "Vespertino"
     elif home.radioNot.isChecked():
         turno = "Noturno"
-        
-        
 
     cursor = conexao.cursor()
     sql = "insert into tb_voluntario2 (nome, idade, genero, turno) values (%s, %s, %s, %s)"
-    entrada = (str(nome),str(idade),str(genero),str(turno))
-    cursor.execute(sql,entrada)
+    entrada = (str(nome), str(idade), str(genero), str(turno))
+    cursor.execute(sql, entrada)
     conexao.commit()
     sucesso.show()
     limpar()
-    
+
+
 def limpar():
     home.le_nome.setText("")
     home.le_idade.setText("")
 
-    # O codigo abaixo nao esta funcionando
-    '''home.radioMat.setAutoExclusive(false)
-    home.radioVesp.setAutoExclusive(false)
-    home.radioNot.setAutoExclusive(false)
-    home.radioMat.setChecked(false)
-    home.radioVesp.setChecked(false)
-    home.radioNot.setChecked(false)
-    home.radioMat.setAutoExclusive(true)
-    home.radioVesp.setAutoExclusive(true)
-    home.radioNot.setAutoExclusive(true)'''
-
-    # home.le_genero.currentText("")
 
 def listar():
     lista.show()
@@ -72,13 +61,8 @@ def listar():
         lista.list_turno.addItem(str(linha[4]))
     conexao.commit()
 
+
 home.pb_enviar.clicked.connect(cadastrar)
 home.pb_lista.clicked.connect(listar)
 home.pb_limpar.clicked.connect(limpar)
 app.exec()
-
-
-
-
-
-
