@@ -1,5 +1,6 @@
 from PyQt5 import uic, QtWidgets
-import mysql.connector
+
+from src.model.conexao import *
 
 app = QtWidgets.QApplication([])
 home = uic.loadUi("view/home.ui")
@@ -9,13 +10,8 @@ lista = uic.loadUi("view/lista.ui")
 
 home.show()
 
-conexao = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd="2wNk#kYWFH@$2D3RcV5!",
-    database="db_caixa_eletronico")
+conexao = conectar_banco()
 
-# Teste
 def cadastrar():
     nome = home.le_nome.text()
     idade = home.le_idade.text()
