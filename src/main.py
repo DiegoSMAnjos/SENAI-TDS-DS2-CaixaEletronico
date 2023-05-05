@@ -1,17 +1,46 @@
 from PyQt5 import uic, QtWidgets
+from src.model.Conexao import *
 
-from src.model.conexao import *
+
+def exibir_tela_01():
+    home.btTouch_saque.setVisible(False)
+    set_botoes_saque_pre_definidos(False)
+    exibir_boas_vindas()
+    return
+
+
+def exibir_boas_vindas():
+    home.label_frame_principal.setText("<html><head/><body><p>Olá! Seja bem-vindo(a)!</p>" +
+                                       "<p>Escolha a opção desejada abaixo:</p></body></html>")
+    home.btTouch_saque.setVisible(True)
+
+
+def exibir_menu_saque():
+    home.btTouch_saque.setVisible(False)
+    set_botoes_saque_pre_definidos(True)
+    home.label_frame_principal.setText("<html><head/><body><p>Escolha um valor definido ao lado</p>" +
+                                       "<p>Ou digite um valor específico no teclado numérico: </p></body></html>")
+
+
+def set_botoes_saque_pre_definidos(ativo):
+    home.btTouch_50.setVisible(ativo)
+    home.btTouch_100.setVisible(ativo)
+    home.btTouch_150.setVisible(ativo)
+    home.btTouch_200.setVisible(ativo)
+
 
 app = QtWidgets.QApplication([])
-home = uic.loadUi("view/home.ui")
-
-sucesso = uic.loadUi("view/sucesso.ui")
-lista = uic.loadUi("view/lista.ui")
-
-home.show()
-
+home = uic.loadUi("src/view/home-saque.ui")
 conexao = conectar_banco()
 
+home.show()
+exibir_tela_01()
+
+home.btTouch_saque.clicked.connect(exibir_menu_saque)
+
+app.exec()
+
+'''
 def cadastrar():
     nome = home.le_nome.text()
     idade = home.le_idade.text()
@@ -58,7 +87,9 @@ def listar():
     conexao.commit()
 
 
+
+
 home.pb_enviar.clicked.connect(cadastrar)
 home.pb_lista.clicked.connect(listar)
 home.pb_limpar.clicked.connect(limpar)
-app.exec()
+'''

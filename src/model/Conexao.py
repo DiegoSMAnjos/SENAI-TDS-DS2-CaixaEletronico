@@ -5,6 +5,6 @@ def conectar_banco():
     conexao = mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="2wNk#kYWFH@$2D3RcV5!",
+        passwd="1234",
         database="db_caixa_eletronico")
     return conexao
