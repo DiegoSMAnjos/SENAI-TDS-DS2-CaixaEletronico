@@ -1,5 +1,5 @@
 from PyQt5 import uic, QtWidgets
-from src.model.Conexao import *
+from model.Conexao import *
 
 
 def exibir_tela_01():
@@ -30,8 +30,8 @@ def set_botoes_saque_pre_definidos(ativo):
 
 
 app = QtWidgets.QApplication([])
-home = uic.loadUi("src/view/home-saque.ui")
-conexao = conectar_banco()
+home = uic.loadUi("view/home-saque.ui")
+# conexao = conectar_banco()
 
 home.show()
 exibir_tela_01()
