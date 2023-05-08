@@ -76,67 +76,15 @@ def set_botoes_saque_pre_definidos(ativo):
     home.btTouch_200.setVisible(ativo)
 
 
+home = uic.loadUi('src/view/home-saque.ui')
+
 app = QtWidgets.QApplication([])
-home = uic.loadUi("view/home-saque.ui")
+home.show()
 # conexao = conectar_banco()
 
-home.show()
+
 exibir_tela_01()
 
 home.btTouch_saque.clicked.connect(exibir_menu_saque)
 
 app.exec()
-
-'''
-def cadastrar():
-    nome = home.le_nome.text()
-    idade = home.le_idade.text()
-    genero = home.le_genero.currentText()
-    turno = ""
-    if home.radioMat.isChecked():
-        turno = "Matutino"
-    elif home.radioVesp.isChecked():
-        turno = "Vespertino"
-    elif home.radioNot.isChecked():
-        turno = "Noturno"
-
-    cursor = conexao.cursor()
-    sql = "insert into tb_voluntario2 (nome, idade, genero, turno) values (%s, %s, %s, %s)"
-    entrada = (str(nome), str(idade), str(genero), str(turno))
-    cursor.execute(sql, entrada)
-    conexao.commit()
-    sucesso.show()
-    limpar()
-
-
-def limpar():
-    home.le_nome.setText("")
-    home.le_idade.setText("")
-
-
-def listar():
-    lista.show()
-    lista.list_nome.clear()
-    lista.list_idade.clear()
-    lista.list_genero.clear()
-    cursor = conexao.cursor()
-    # sql = "SELECT * FROM tb_voluntario"
-    # sql = "SELECT * FROM tb_voluntario ORDER BY nome ASC, idade DESC"
-    sql = "SELECT * FROM tb_voluntario2"
-    cursor.execute(sql)
-    registros = cursor.fetchall()
-    # print(registros)
-    for linha in registros:
-        lista.list_nome.addItem(str(linha[1]))
-        lista.list_idade.addItem(str(linha[2]))
-        lista.list_genero.addItem(str(linha[3]))
-        lista.list_turno.addItem(str(linha[4]))
-    conexao.commit()
-
-
-
-
-home.pb_enviar.clicked.connect(cadastrar)
-home.pb_lista.clicked.connect(listar)
-home.pb_limpar.clicked.connect(limpar)
-'''
