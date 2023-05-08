@@ -1,2 +1,5 @@
-# sistemaCaixaEletronico
- Sistema de Caixa Eletrônico com PyQt5 e MySQL - Demo
+# Sistema de Caixa Eletrônico com PyQt5 e MySQL - Demo
+ 
+
+
+-[ ] TODO  
