@@ -170,7 +170,7 @@ border-radius: 20px;
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QFrame" name="frame_2">
+              <widget class="QFrame" name="frameCliente">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(100, 100, 100);</string>
                </property>
@@ -182,7 +182,7 @@ border-radius: 20px;
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">
                 <item>
-                 <widget class="QLabel" name="label">
+                 <widget class="QLabel" name="lblAreaCliente">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
@@ -207,7 +207,7 @@ border-radius: 20px;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btMenuSaque">
+                 <widget class="QPushButton" name="btnEntrarCliente">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
@@ -233,7 +233,7 @@ QPushButton:pressed {
 </string>
                   </property>
                   <property name="text">
-                   <string>SAQUE</string>
+                   <string>Entrar</string>
                   </property>
                  </widget>
                 </item>
@@ -241,7 +241,7 @@ QPushButton:pressed {
               </widget>
              </item>
              <item>
-              <widget class="QFrame" name="frame_3">
+              <widget class="QFrame" name="frameAdm">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(100, 100, 100);</string>
                </property>
@@ -253,7 +253,7 @@ QPushButton:pressed {
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
                 <item>
-                 <widget class="QLabel" name="label_2">
+                 <widget class="QLabel" name="lblAreaAdm">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
@@ -269,7 +269,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btTouch_151">
+                 <widget class="QPushButton" name="btnCadastrarCliente">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
@@ -300,7 +300,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="btTouch_152">
+                 <widget class="QPushButton" name="btnReposicaoCedula">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>

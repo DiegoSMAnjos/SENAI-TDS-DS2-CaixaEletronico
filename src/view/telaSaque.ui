@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>800</height>
+    <height>820</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -247,7 +247,8 @@ QPushButton:pressed {
                 <string notr="true">/*background-color: rgb(255, 255, 255);*/
 border-radius: 10px;
 border: 2px solid rgb(154, 203, 245);
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(224, 255, 255));</string>
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(224, 255, 255));
+</string>
                </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -257,18 +258,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">
                 <item>
-                 <widget class="QLabel" name="label_frame_principal">
-                  <property name="font">
-                   <font>
-                    <family>Lucida Console</family>
-                    <pointsize>12</pointsize>
-                   </font>
-                  </property>
+                 <widget class="QLabel" name="lblTextoTerminal">
                   <property name="styleSheet">
-                   <string notr="true">border-color: rgba(255, 255, 255, 0);</string>
+                   <string notr="true">border-color: rgba(255, 255, 255, 0);
+font: 12pt &quot;Lucida Console&quot;;</string>
                   </property>
                   <property name="text">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escolha um valor definido ao lado&lt;/p&gt;&lt;p&gt;Ou digite um valor específico no teclado numérico: &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::RichText</enum>
@@ -287,6 +283,68 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
                   </property>
                   <property name="indent">
                    <number>0</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <item>
+                   <widget class="QLabel" name="lblValorOutro">
+                    <property name="minimumSize">
+                     <size>
+                      <width>150</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">border-color: rgba(255, 255, 255, 0);
+background-color: rgba(255, 255, 255, 0);
+font: 12pt &quot;Lucida Console&quot;;
+font-weight: bold;</string>
+                    </property>
+                    <property name="text">
+                     <string>VALOR: </string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>50</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 255);</string>
+                    </property>
+                    <property name="frame">
+                     <bool>true</bool>
+                    </property>
+                    <property name="clearButtonEnabled">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label">
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgba(255, 255, 255, 0);
+font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>NOTAS DISPONÍVEIS:  R$ 5,00  |  R$ 10,00  |  R$ 20,00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -345,37 +403,6 @@ QPushButton:pressed {
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="btTouch_200">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>50</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton {
-	font: 14pt &quot;Segoe UI&quot;;	
-	font-weight: bold;
-	border-radius: 5px;
-	border: 2px solid rgb(154, 203, 245);
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(224, 255, 255));
-}
-QPushButton:hover {	
-	border: 2px solid rgb(70, 181, 245);	
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(174, 245, 245));
-}
-QPushButton:pressed {	
-	border: 2px solid rgb(60, 60, 60);	
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(135, 212, 245));
-}
-</string>
-               </property>
-               <property name="text">
-                <string>OUTROS</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
@@ -383,7 +410,7 @@ QPushButton:pressed {
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QFrame" name="button_area">
+        <widget class="QFrame" name="areaBotoesTerminal">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -402,7 +429,7 @@ QPushButton:pressed {
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QFrame" name="button_area1">
+           <widget class="QFrame" name="areaBotoesNum">
             <property name="maximumSize">
              <size>
               <width>500</width>
@@ -420,7 +447,7 @@ QPushButton:pressed {
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="0">
-              <widget class="QPushButton" name="bt_1">
+              <widget class="QPushButton" name="btnNum1">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -438,7 +465,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QPushButton" name="bt_2">
+              <widget class="QPushButton" name="btnNum2">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -456,7 +483,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QPushButton" name="bt_3">
+              <widget class="QPushButton" name="btnNum3">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -474,7 +501,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QPushButton" name="bt_4">
+              <widget class="QPushButton" name="btnNum4">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -492,7 +519,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QPushButton" name="bt_5">
+              <widget class="QPushButton" name="btnNum5">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -510,7 +537,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="1" column="2">
-              <widget class="QPushButton" name="bt_6">
+              <widget class="QPushButton" name="btnNum6">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -528,7 +555,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QPushButton" name="bt_7">
+              <widget class="QPushButton" name="btnNum7">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -546,7 +573,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QPushButton" name="bt_8">
+              <widget class="QPushButton" name="btnNum8">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -564,7 +591,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="2" column="2">
-              <widget class="QPushButton" name="bt_9">
+              <widget class="QPushButton" name="btnNum9">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -582,7 +609,7 @@ background-color: rgb(211, 211, 211)</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QPushButton" name="bt_0">
+              <widget class="QPushButton" name="btnNum0">
                <property name="maximumSize">
                 <size>
                  <width>50</width>
@@ -603,7 +630,7 @@ background-color: rgb(211, 211, 211)</string>
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="button_area2">
+           <widget class="QFrame" name="areaBotoesConf">
             <property name="maximumSize">
              <size>
               <width>280</width>
@@ -627,7 +654,7 @@ background-color: rgb(211, 211, 211)</string>
               <number>40</number>
              </property>
              <item>
-              <widget class="QPushButton" name="bt_cancelar">
+              <widget class="QPushButton" name="btnCancelar">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -648,7 +675,7 @@ background-color: rgb(212, 0, 3);
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="bt_corrigir">
+              <widget class="QPushButton" name="btnCorrigir">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -667,7 +694,7 @@ background-color: rgb(216, 216, 0);</string>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="bt_entrar">
+              <widget class="QPushButton" name="btnEntrar">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -682,33 +709,6 @@ background-color: rgb(0, 148, 0);</string>
                </property>
                <property name="text">
                 <string>ENTRA</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="bt_proximo">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>50</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Cascadia Code</family>
-                 <pointsize>22</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: 22pt &quot;Cascadia Code&quot;;
-font-weight: bold;
-background-color: rgb(211, 211, 211)</string>
-               </property>
-               <property name="text">
-                <string>MENU</string>
                </property>
               </widget>
              </item>
