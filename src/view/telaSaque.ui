@@ -311,7 +311,7 @@ font-weight: bold;</string>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="lineEdit">
+                   <widget class="QLineEdit" name="lineEditValor">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>

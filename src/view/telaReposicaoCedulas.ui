@@ -480,9 +480,9 @@ border-radius: 0px;</string>
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="lblMensagemErro">
+                    <widget class="QLabel" name="lblMensagem">
                      <property name="styleSheet">
-                      <string notr="true">color: rgb(255, 100, 100);</string>
+                      <string notr="true"/>
                      </property>
                      <property name="text">
                       <string/>
