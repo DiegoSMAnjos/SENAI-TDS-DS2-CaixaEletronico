@@ -49,6 +49,13 @@ from PyQt5 import uic, QtWidgets
 from model.Conexao import *
 
 
+def abrirMenuSaque():
+    home.close()
+    menuSaque.show()
+
+"""
+
+
 def exibir_tela_01():
     home.btTouch_saque.setVisible(False)
     set_botoes_saque_pre_definidos(False)
@@ -74,17 +81,16 @@ def set_botoes_saque_pre_definidos(ativo):
     home.btTouch_100.setVisible(ativo)
     home.btTouch_150.setVisible(ativo)
     home.btTouch_200.setVisible(ativo)
-
-
-home = uic.loadUi('src/view/home-saque.ui')
-
+"""
 app = QtWidgets.QApplication([])
+home = uic.loadUi('src/view/telaInicial.ui')
+menuSaque = uic.loadUi('src/view/telaSaque.ui')
 home.show()
 # conexao = conectar_banco()
 
 
-exibir_tela_01()
+# exibir_tela_01()
 
-home.btTouch_saque.clicked.connect(exibir_menu_saque)
+home.btMenuSaque.clicked.connect(abrirMenuSaque)
 
 app.exec()

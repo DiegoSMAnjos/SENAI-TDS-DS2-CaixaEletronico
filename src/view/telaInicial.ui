@@ -26,6 +26,13 @@
      <height>0</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+color: rgb(255, 255, 255);
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+
+}</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
      <number>0</number>
@@ -86,7 +93,7 @@ font-weight: bold;
 </string>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#ffffff;&quot;&gt;SISTEMA MEU&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-style:italic; color:#ffab23;&quot;&gt;C&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#ffab23;&quot;&gt;AIXA&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#ffffff;&quot;&gt;MEU&lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-style:italic; color:#ffab23;&quot;&gt;C&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#ffab23;&quot;&gt;AIXA&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -99,7 +106,7 @@ font-weight: bold;
     <item>
      <widget class="QFrame" name="content">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(210, 210, 210);</string>
+       <string notr="true">background-color: rgb(230,230,230);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
@@ -117,8 +124,9 @@ font-weight: bold;
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(59, 59, 59);
-border-radius: 20px;</string>
+          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(34, 128, 229), stop:1 rgba(70, 181, 245));
+border-radius: 20px;
+</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -129,15 +137,30 @@ border-radius: 20px;</string>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QLabel" name="lbl_menu">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Olá! Bem vindo(a) ao Sistema MeuCaixa! Escolha uma opção abaixo:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QFrame" name="frame">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 234, 171);</string>
+             <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(224, 255, 255));</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -145,6 +168,172 @@ border-radius: 20px;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QFrame" name="frame_2">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(100, 100, 100);</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <widget class="QLabel" name="label">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Área do Cliente</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btMenuSaque">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+	font: 14pt &quot;Segoe UI&quot;;	
+	font-weight: bold;
+	border-radius: 5px;
+	border: 2px solid rgb(154, 203, 245);
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(224, 255, 255));
+}
+QPushButton:hover {	
+	border: 2px solid rgb(70, 181, 245);	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(174, 245, 245));
+}
+QPushButton:pressed {	
+	border: 2px solid rgb(60, 60, 60);	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(135, 212, 245));
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>SAQUE</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_3">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(100, 100, 100);</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <widget class="QLabel" name="label_2">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Área do Administrador</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btTouch_151">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+	font: 14pt &quot;Segoe UI&quot;;	
+	font-weight: bold;
+	border-radius: 5px;
+	border: 2px solid rgb(154, 203, 245);
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(224, 255, 255));
+}
+QPushButton:hover {	
+	border: 2px solid rgb(70, 181, 245);	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(174, 245, 245));
+}
+QPushButton:pressed {	
+	border: 2px solid rgb(60, 60, 60);	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(135, 212, 245));
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>Cadastro de Clientes</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btTouch_152">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+	font: 14pt &quot;Segoe UI&quot;;	
+	font-weight: bold;
+	border-radius: 5px;
+	border: 2px solid rgb(154, 203, 245);
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(224, 255, 255));
+}
+QPushButton:hover {	
+	border: 2px solid rgb(70, 181, 245);	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(174, 245, 245));
+}
+QPushButton:pressed {	
+	border: 2px solid rgb(60, 60, 60);	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(135, 212, 245));
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>Reposição de Cédulas</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
