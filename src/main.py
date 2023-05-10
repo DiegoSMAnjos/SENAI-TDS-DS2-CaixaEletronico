@@ -19,7 +19,6 @@ telaInsucessoOperacao = uic.loadUi('view/telaInsucessoOperacao.ui')
 
 conn = conectar_banco()
 
-
 def calcularNotas(valorSaque, qtdNotas5, qtdNotas10, qtdNotas20):
     notas20 = min(valorSaque // 20, qtdNotas20)
     valorSaque -= notas20 * 20
