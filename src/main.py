@@ -7,13 +7,13 @@ clienteSelecionado = [0, "", "", "", 0]
 # Carregamento do aplicativo
 
 app = QtWidgets.QApplication([])
-telaInicial = uic.loadUi('src/view/telaInicial.ui')
-telaSaqueDeposito = uic.loadUi('src/view/telaSaqueDeposito.ui')
-telaClienteEntrar = uic.loadUi('src/view/telaClienteEntrar.ui')
-telaClienteCadastrar = uic.loadUi('src/view/telaClienteCadastrar.ui')
-telaReposicaoCedulas = uic.loadUi('src/view/telaReposicaoCedulas.ui')
-telaSucessoOperacao = uic.loadUi('src/view/telaSucessoOperacao.ui')
-telaInsucessoOperacao = uic.loadUi('src/view/telaInsucessoOperacao.ui')
+telaInicial = uic.loadUi('view/telaInicial.ui')
+telaSaqueDeposito = uic.loadUi('view/telaSaqueDeposito.ui')
+telaClienteEntrar = uic.loadUi('view/telaClienteEntrar.ui')
+telaClienteCadastrar = uic.loadUi('view/telaClienteCadastrar.ui')
+telaReposicaoCedulas = uic.loadUi('view/telaReposicaoCedulas.ui')
+telaSucessoOperacao = uic.loadUi('view/telaSucessoOperacao.ui')
+telaInsucessoOperacao = uic.loadUi('view/telaInsucessoOperacao.ui')
 
 # Conexao com o banco de dados
 
