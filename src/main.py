@@ -1,50 +1,165 @@
 from PyQt5 import uic, QtWidgets
 from model.Conexao import *
+import mysql.connector
+
+clienteSelecionado = [0, "", "", "", 0]
 
 # Carregamento do aplicativo
 
 app = QtWidgets.QApplication([])
 telaInicial = uic.loadUi('src/view/telaInicial.ui')
-telaSaque = uic.loadUi('src/view/telaSaque.ui')
+telaSaqueDeposito = uic.loadUi('src/view/telaSaqueDeposito.ui')
 telaClienteEntrar = uic.loadUi('src/view/telaClienteEntrar.ui')
 telaClienteCadastrar = uic.loadUi('src/view/telaClienteCadastrar.ui')
 telaReposicaoCedulas = uic.loadUi('src/view/telaReposicaoCedulas.ui')
+telaSucessoOperacao = uic.loadUi('src/view/telaSucessoOperacao.ui')
+telaInsucessoOperacao = uic.loadUi('src/view/telaInsucessoOperacao.ui')
 
 # Conexao com o banco de dados
 
 conn = conectar_banco()
 
 
+def calcularNotas(valorSaque, qtdNotas5, qtdNotas10, qtdNotas20):
+    notas20 = min(valorSaque // 20, qtdNotas20)
+    valorSaque -= notas20 * 20
+
+    notas10 = min(valorSaque // 10, qtdNotas10)
+    valorSaque -= notas10 * 10
+
+    notas5 = min(valorSaque // 5, qtdNotas5)
+
+    return notas5, notas10, notas20
+
+
 # Definições de Funções
+def validaLogin():
+    email = telaClienteEntrar.campoEmail.text()
+    senha = telaClienteEntrar.campoSenha.text()
+    cursor = conn.cursor()
+    sql = "SELECT * FROM cliente WHERE email = %s AND senha = %s"
+    entrada = (email, senha)
+    cursor.execute(sql, entrada)
+    registros = cursor.fetchall()
+    conn.commit()
+    if len(registros) == 0:
+        telaClienteEntrar.lblMensagem.setText("<html><head/><body><p><span style=\" color:#f06464;\">Cliente não "
+                                              "encontrado!</span></p></body></html>")
+    else:
+        telaClienteEntrar.campoEmail.setText("")
+        telaClienteEntrar.campoSenha.setText("")
+        telaClienteEntrar.lblMensagem.setText("")
+        clienteSelecionado[0] = registros[0][0]  # idCliente
+        clienteSelecionado[1] = registros[0][1]  # email
+        clienteSelecionado[2] = registros[0][2]  # senha
+        clienteSelecionado[3] = registros[0][3]  # endereco
+        clienteSelecionado[4] = registros[0][4]  # saldo
+        trocaTelas(telaClienteEntrar, telaSaqueDeposito)
+
+
+def efetuaOperacao():
+    if telaSaqueDeposito.lineEditValor.text() == "":
+        valorOp = 0
+    else:
+        valorOp = int(telaSaqueDeposito.lineEditValor.text())
+
+    # Tipo = Saque
+    if telaSaqueDeposito.rbSaque.isChecked():
+        saldoAtual = clienteSelecionado[4]
+        if valorOp > saldoAtual:
+            telaSaqueDeposito.lineEditValor.setText("")
+            telaInsucessoOperacao.lblMenu.setText("Seu saldo é insuficiente para o saque! Deseja tentar novamente?")
+            trocaTelas(telaSaqueDeposito, telaInsucessoOperacao)
+        else:
+            notas5, notas10, notas20 = 0, 0, 0
+            cursor = conn.cursor()
+            sql = "SELECT * FROM nota;"
+            cursor.execute(sql)
+            registros = cursor.fetchall()
+            print(registros)
+            for registro in registros:
+                if registro[1] == 5.00:
+                    notas5 = int(registro[2])
+                elif registro[1] == 10.00:
+                    notas10 = int(registro[2])
+                elif registro[1] == 20.00:
+                    notas20 = int(registro[2])
+            totalNotas = (notas5 * 5) + (notas10 * 10) + (notas20 * 20)
+            if totalNotas < valorOp:
+                telaInsucessoOperacao.lblMenu.setText("O caixa não dispõe de notas o suficiente para realizar o "
+                                                      "saque. Entre em contato com o administrador. Deseja realizar "
+                                                      "outra operação?")
+                trocaTelas(telaSaqueDeposito, telaInsucessoOperacao)
+            else:
+                resultNotas5, resultNotas10, resultNotas20 = calcularNotas(valorOp, notas5, notas10, notas20)
+                cursor = conn.cursor()
+                sql = "UPDATE nota SET quantidade = %s WHERE valor = %s;"
+                entrada = (str(notas5 - resultNotas5), str(5.00))
+                cursor.execute(sql, entrada)
+                entrada = (str(notas10 - resultNotas10), str(10.00))
+                cursor.execute(sql, entrada)
+                entrada = (str(notas20 - resultNotas20), str(20.00))
+                cursor.execute(sql, entrada)
+                conn.commit()
+                valorAReceber = (resultNotas5 * 5) + (resultNotas10 * 10) + (resultNotas20 * 20)
+                telaSucessoOperacao.lblMenu.setText(
+                    f"Saque realizado com sucesso! Você receberá: {resultNotas5} notas de R$ 5.00, {resultNotas10} notas de R$ 10.00 e {resultNotas20} notas de R$ 20.00. Total: R$ {valorAReceber}.00. Deseja realizar outra operação?")
+                clienteSelecionado[4] = saldoAtual - valorAReceber
+                cursor = conn.cursor()
+                sql = "UPDATE cliente SET saldo = %s WHERE id = %s;"
+                entrada = (str(clienteSelecionado[4]), str(clienteSelecionado[0]))
+                cursor.execute(sql, entrada)
+                conn.commit()
+                trocaTelas(telaSaqueDeposito, telaSucessoOperacao)
+
+    # Tipo = Depósito
+    elif telaSaqueDeposito.rbDeposito.isChecked():
+        telaSaqueDeposito.lineEditValor.setText("")
+        clienteSelecionado[4] = int(clienteSelecionado[4]) + valorOp
+        cursor = conn.cursor()
+        sql = "UPDATE cliente SET saldo = %s WHERE id = %s;"
+        entrada = (str(clienteSelecionado[4]), str(clienteSelecionado[0]))
+        cursor.execute(sql, entrada)
+        conn.commit()
+        trocaTelas(telaSaqueDeposito, telaSucessoOperacao)
 
 
 def trocaTelas(tela01, tela02):
+    print(clienteSelecionado)
     tela01.close()
     tela02.show()
-    return
 
 
 def addValor(numero):
-    temp = telaSaque.lineEditValor.text() + str(numero)
-    telaSaque.lineEditValor.setText(temp)
+    telaSaqueDeposito.lineEditValor.setText(telaSaqueDeposito.lineEditValor.text() + str(numero))
+
+
+def addValorFixo(numero):
+    telaSaqueDeposito.lineEditValor.setText(str(numero))
+
 
 def removeValor():
-    temp = telaSaque.lineEditValor.text()[:-1]
-    telaSaque.lineEditValor.setText(temp)
+    telaSaqueDeposito.lineEditValor.setText(telaSaqueDeposito.lineEditValor.text()[:-1])
 
-def botoesNumericos():
-    telaSaque.btnNum0.clicked.connect(lambda: addValor(0))
-    telaSaque.btnNum1.clicked.connect(lambda: addValor(1))
-    telaSaque.btnNum2.clicked.connect(lambda: addValor(2))
-    telaSaque.btnNum3.clicked.connect(lambda: addValor(3))
-    telaSaque.btnNum4.clicked.connect(lambda: addValor(4))
-    telaSaque.btnNum5.clicked.connect(lambda: addValor(5))
-    telaSaque.btnNum6.clicked.connect(lambda: addValor(6))
-    telaSaque.btnNum7.clicked.connect(lambda: addValor(7))
-    telaSaque.btnNum8.clicked.connect(lambda: addValor(8))
-    telaSaque.btnNum9.clicked.connect(lambda: addValor(9))
-    telaSaque.btnCorrigir.clicked.connect(lambda: removeValor())
 
+# Operações
+
+telaSaqueDeposito.btnNum0.clicked.connect(lambda: addValor(0))
+telaSaqueDeposito.btnNum1.clicked.connect(lambda: addValor(1))
+telaSaqueDeposito.btnNum2.clicked.connect(lambda: addValor(2))
+telaSaqueDeposito.btnNum3.clicked.connect(lambda: addValor(3))
+telaSaqueDeposito.btnNum4.clicked.connect(lambda: addValor(4))
+telaSaqueDeposito.btnNum5.clicked.connect(lambda: addValor(5))
+telaSaqueDeposito.btnNum6.clicked.connect(lambda: addValor(6))
+telaSaqueDeposito.btnNum7.clicked.connect(lambda: addValor(7))
+telaSaqueDeposito.btnNum8.clicked.connect(lambda: addValor(8))
+telaSaqueDeposito.btnNum9.clicked.connect(lambda: addValor(9))
+telaSaqueDeposito.btnCorrigir.clicked.connect(lambda: removeValor())
+telaSaqueDeposito.btnTouch50.clicked.connect(lambda: addValorFixo(50))
+telaSaqueDeposito.btnTouch100.clicked.connect(lambda: addValorFixo(100))
+telaSaqueDeposito.btnTouch150.clicked.connect(lambda: addValorFixo(150))
+telaClienteEntrar.btnLogin.clicked.connect(lambda: validaLogin())
+telaSaqueDeposito.btnEntrar.clicked.connect(lambda: efetuaOperacao())
 
 # Navegação entre Telas
 
@@ -54,8 +169,14 @@ telaInicial.btnReposicaoCedula.clicked.connect(lambda: trocaTelas(telaInicial, t
 telaClienteCadastrar.btnMenu.clicked.connect(lambda: trocaTelas(telaClienteCadastrar, telaInicial))
 telaClienteEntrar.btnMenu.clicked.connect(lambda: trocaTelas(telaClienteEntrar, telaInicial))
 telaReposicaoCedulas.btnMenu.clicked.connect(lambda: trocaTelas(telaReposicaoCedulas, telaInicial))
-telaSaque.btnCancelar.clicked.connect(lambda: trocaTelas(telaSaque, telaInicial))
-botoesNumericos()
+telaSaqueDeposito.btnCancelar.clicked.connect(lambda: trocaTelas(telaSaqueDeposito, telaInicial))
+telaSucessoOperacao.btnSim.clicked.connect(lambda: trocaTelas(telaSucessoOperacao, telaSaqueDeposito))
+telaSucessoOperacao.btnNao.clicked.connect(lambda: trocaTelas(telaSucessoOperacao, telaInicial))
+telaInsucessoOperacao.btnSim.clicked.connect(lambda: trocaTelas(telaInsucessoOperacao, telaSaqueDeposito))
+telaInsucessoOperacao.btnNao.clicked.connect(lambda: trocaTelas(telaInsucessoOperacao, telaInicial))
+
+# Operações
+
 
 """
 <html><head/><body><p><span style=" color:#6fff91;">Notas inseridas com sucesso!</span></p></body></html>
@@ -63,6 +184,5 @@ botoesNumericos()
 
 # Execução do aplicativo
 telaInicial.show()
-telaSaque.show()
 
 app.exec()

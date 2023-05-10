@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>820</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -117,6 +117,81 @@ font-weight: bold;
        <property name="spacing">
         <number>0</number>
        </property>
+       <item row="2" column="0">
+        <widget class="QFrame" name="frameModalidade">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QRadioButton{
+font-size: 16px;
+font-weight: bold;
+
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QRadioButton" name="rbSaque">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>SAQUE</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbDeposito">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>DEPÓSITO</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QFrame" name="screen_area">
          <property name="maximumSize">
@@ -137,8 +212,23 @@ border-radius: 20px;
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
-           <widget class="QFrame" name="left_buttons">
+           <widget class="QFrame" name="frameBtnEsquerdo">
             <property name="maximumSize">
              <size>
               <width>150</width>
@@ -156,7 +246,7 @@ border-radius: 20px;
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QPushButton" name="btTouch_50">
+              <widget class="QPushButton" name="btnTouch50">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -187,7 +277,7 @@ QPushButton:pressed {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btTouch_100">
+              <widget class="QPushButton" name="btnTouch100">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -239,7 +329,7 @@ QPushButton:pressed {
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
-              <widget class="QFrame" name="frame">
+              <widget class="QFrame" name="frameTerminal">
                <property name="enabled">
                 <bool>true</bool>
                </property>
@@ -287,7 +377,7 @@ font: 12pt &quot;Lucida Console&quot;;</string>
                  </widget>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <layout class="QHBoxLayout" name="frameValorOutro">
                   <item>
                    <widget class="QLabel" name="lblValorOutro">
                     <property name="minimumSize">
@@ -322,10 +412,17 @@ font-weight: bold;</string>
                      </size>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
+                     <string notr="true">background-color: rgb(255, 255, 255);
+font: 14pt &quot;Lucida Console&quot;;</string>
+                    </property>
+                    <property name="text">
+                     <string/>
                     </property>
                     <property name="frame">
                      <bool>true</bool>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>true</bool>
@@ -341,7 +438,7 @@ font-weight: bold;</string>
 font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
                   </property>
                   <property name="text">
-                   <string>NOTAS DISPONÍVEIS:  R$ 5,00  |  R$ 10,00  |  R$ 20,00</string>
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;NOTAS DISPONÍVEIS PARA SAQUE:&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;R$ 5,00 | R$ 10,00 | R$ 20,00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -355,7 +452,7 @@ font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="right_buttons">
+           <widget class="QFrame" name="frameBtnDireito">
             <property name="maximumSize">
              <size>
               <width>150</width>
@@ -373,7 +470,7 @@ font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
-              <widget class="QPushButton" name="btTouch_150">
+              <widget class="QPushButton" name="btnTouch150">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -409,7 +506,7 @@ QPushButton:pressed {
          </layout>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="3" column="0">
         <widget class="QFrame" name="areaBotoesTerminal">
          <property name="maximumSize">
           <size>
@@ -716,6 +813,27 @@ background-color: rgb(0, 148, 0);</string>
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 16pt &quot;Segoe UI&quot;;
+font-weight: bold;
+</string>
+         </property>
+         <property name="text">
+          <string>ESCOLHA O TIPO DE OPERAÇÃO:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
         </widget>
        </item>
       </layout>
