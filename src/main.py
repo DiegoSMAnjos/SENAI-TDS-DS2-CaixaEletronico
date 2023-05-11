@@ -1,7 +1,7 @@
 from PyQt5 import uic, QtWidgets
 from model.Conexao import *
-import mysql.connector
 
+# Infos do cliente logado = [idCliente, emailCliente, senhaCliente, enderecoCliente, saldoCliente]
 clienteSelecionado = [0, "", "", "", 0]
 
 # Carregamento do aplicativo
@@ -20,6 +20,7 @@ telaInsucessoOperacao = uic.loadUi('view/telaInsucessoOperacao.ui')
 conn = conectar_banco()
 
 
+# Definições de Funções
 def calcularNotas(valorSaque, qtdNotas5, qtdNotas10, qtdNotas20):
     notas20 = min(valorSaque // 20, qtdNotas20)
     valorSaque -= notas20 * 20
@@ -32,23 +33,25 @@ def calcularNotas(valorSaque, qtdNotas5, qtdNotas10, qtdNotas20):
     return notas5, notas10, notas20
 
 
-# Definições de Funções
 def validaLogin():
     email = telaClienteEntrar.campoEmail.text()
     senha = telaClienteEntrar.campoSenha.text()
     cursor = conn.cursor()
     sql = "SELECT * FROM cliente WHERE email = %s AND senha = %s"
-    entrada = (email, senha)
+    entrada = (str(email), str(senha))
     cursor.execute(sql, entrada)
     registros = cursor.fetchall()
+
     conn.commit()
     if len(registros) == 0:
         telaClienteEntrar.lblMensagem.setText("<html><head/><body><p><span style=\" color:#f06464;\">Cliente não "
                                               "encontrado!</span></p></body></html>")
     else:
+        # limpa dados
         telaClienteEntrar.campoEmail.setText("")
         telaClienteEntrar.campoSenha.setText("")
         telaClienteEntrar.lblMensagem.setText("")
+        # armazena temporariamente os dados do cliente autenticado
         clienteSelecionado[0] = registros[0][0]  # idCliente
         clienteSelecionado[1] = registros[0][1]  # email
         clienteSelecionado[2] = registros[0][2]  # senha
@@ -76,6 +79,7 @@ def efetuaOperacao():
             telaInsucessoOperacao.lblMenu.setText("Seu saldo é insuficiente para o saque! Deseja tentar novamente?")
             trocaTelas(telaSaqueDeposito, telaInsucessoOperacao)
         else:
+            # verifica disponibilidade de notas
             notas5, notas10, notas20 = 0, 0, 0
             cursor = conn.cursor()
             sql = "SELECT * FROM nota;"
@@ -141,6 +145,7 @@ def efetuaOperacao():
             f"00 | R$ 20,00</span></p></body></html>")
         trocaTelas(telaSaqueDeposito, telaSucessoOperacao)
 
+
 def insereCliente():
     emailNovoCliente = telaClienteCadastrar.campoEmail.text()
     senhaNovoCliente = telaClienteCadastrar.campoSenha.text()
@@ -152,8 +157,9 @@ def insereCliente():
     elif senhaNovoCliente != repeteSenhaNovoCliente:
         telaClienteCadastrar.lblMensagemErro.setText("As senhas não conferem!")
     else:
+        # Verifica se cliente já está cadastrado
         cursor = conn.cursor()
-        sql = f"SELECT email, senha FROM cliente where email = %s;"
+        sql = "SELECT email, senha FROM cliente where email = %s;"
         entrada = (str(emailNovoCliente),)
         cursor.execute(sql, entrada)
         registros = cursor.fetchall()
@@ -162,6 +168,7 @@ def insereCliente():
         if len(registros) > 0:
             if registros[0][0] == emailNovoCliente:
                 telaClienteCadastrar.lblMensagemErro.setText("Este cliente já está cadastrado!")
+        # cadastra novo cliente
         else:
             telaClienteCadastrar.lblMensagemErro.setText(f"Cliente {emailNovoCliente} cadastrado!")
             telaClienteCadastrar.campoEmail.setText("")
@@ -175,6 +182,7 @@ def insereCliente():
             conn.commit()
 
 
+# exibe para o ADM a quantidade atual de cédulas
 def getQtdCedulas():
     notas5, notas10, notas20 = 0, 0, 0
     cursor = conn.cursor()
@@ -194,6 +202,7 @@ def getQtdCedulas():
 
 def repoeCedulas():
     tipoCedula = telaReposicaoCedulas.cbTipoCedula.currentText()
+    # caso o campo quantidade não tenha uma entrada válida (ex.: 124nadu9v23):
     try:
         qtdCedulas = int(telaReposicaoCedulas.campoQuantidade.text())
         cursor = conn.cursor()
@@ -229,7 +238,7 @@ def removeValor():
     telaSaqueDeposito.lineEditValor.setText(telaSaqueDeposito.lineEditValor.text()[:-1])
 
 
-# Operações
+# Operações e botões
 
 telaSaqueDeposito.btnNum0.clicked.connect(lambda: addValor(0))
 telaSaqueDeposito.btnNum1.clicked.connect(lambda: addValor(1))
@@ -264,8 +273,6 @@ telaSucessoOperacao.btnSim.clicked.connect(lambda: trocaTelas(telaSucessoOperaca
 telaSucessoOperacao.btnNao.clicked.connect(lambda: trocaTelas(telaSucessoOperacao, telaInicial))
 telaInsucessoOperacao.btnSim.clicked.connect(lambda: trocaTelas(telaInsucessoOperacao, telaSaqueDeposito))
 telaInsucessoOperacao.btnNao.clicked.connect(lambda: trocaTelas(telaInsucessoOperacao, telaInicial))
-
-# Tela de Reposição de notas:
 
 
 # Execução do aplicativo

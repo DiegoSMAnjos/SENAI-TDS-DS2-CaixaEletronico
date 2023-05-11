@@ -21,7 +21,3 @@ INSERT IGNORE INTO nota VALUES (2,10.00,20);
 INSERT IGNORE INTO nota VALUES (3,20.00,20);
 INSERT IGNORE INTO cliente VALUES (1,"diegoanjos@gmail.com","1234","Rua ABC, 123", 50.00);
 INSERT IGNORE INTO cliente VALUES (2,"grasi.rda@gmail.com","1234","Rua DEF, 456", 100.00);
-
-
-SELECT * FROM cliente;
-SELECT * FROM nota;
