@@ -57,3 +57,20 @@ CREATE TABLE IF NOT EXISTS cliente (
     endereco VARCHAR(50)
 );
 
+why does the code pass this first example:
+```python
+cursor = conn.cursor()
+        sql = f"SELECT email, senha FROM cliente where email = \"{emailNovoCliente}\";"
+        cursor.execute(sql)
+        registros = cursor.fetchall()
+        conn.commit()
+```
+but fails in this case:
+```python
+cursor = conn.cursor()
+        sql = f"SELECT email, senha FROM cliente where email = %s;"
+        entrada = (str(emailNovoCliente))
+        cursor.execute(sql,entrada)
+        registros = cursor.fetchall()
+        conn.commit()
+```

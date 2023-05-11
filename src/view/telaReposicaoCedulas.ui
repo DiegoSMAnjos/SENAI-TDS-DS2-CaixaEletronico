@@ -182,16 +182,16 @@ border-radius: 20px;
                </property>
                <layout class="QGridLayout" name="gridLayout">
                 <property name="leftMargin">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="topMargin">
                  <number>20</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="spacing">
                  <number>0</number>
@@ -451,10 +451,10 @@ border-radius: 0px;</string>
                 </item>
                 <item row="0" column="0">
                  <widget class="QFrame" name="frame">
-                  <property name="maximumSize">
+                  <property name="minimumSize">
                    <size>
-                    <width>16777215</width>
-                    <height>20</height>
+                    <width>0</width>
+                    <height>150</height>
                    </size>
                   </property>
                   <property name="frameShape">
@@ -481,6 +481,12 @@ border-radius: 0px;</string>
                    </property>
                    <item>
                     <widget class="QLabel" name="lblMensagem">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>150</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true"/>
                      </property>
@@ -488,7 +494,10 @@ border-radius: 0px;</string>
                       <string/>
                      </property>
                      <property name="alignment">
-                      <set>Qt::AlignCenter</set>
+                      <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>

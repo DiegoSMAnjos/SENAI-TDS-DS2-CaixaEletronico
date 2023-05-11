@@ -7,17 +7,18 @@ clienteSelecionado = [0, "", "", "", 0]
 # Carregamento do aplicativo
 
 app = QtWidgets.QApplication([])
-telaInicial = uic.loadUi('view/telaInicial.ui')
-telaSaqueDeposito = uic.loadUi('view/telaSaqueDeposito.ui')
-telaClienteEntrar = uic.loadUi('view/telaClienteEntrar.ui')
-telaClienteCadastrar = uic.loadUi('view/telaClienteCadastrar.ui')
-telaReposicaoCedulas = uic.loadUi('view/telaReposicaoCedulas.ui')
-telaSucessoOperacao = uic.loadUi('view/telaSucessoOperacao.ui')
-telaInsucessoOperacao = uic.loadUi('view/telaInsucessoOperacao.ui')
+telaInicial = uic.loadUi('src/view/telaInicial.ui')
+telaSaqueDeposito = uic.loadUi('src/view/telaSaqueDeposito.ui')
+telaClienteEntrar = uic.loadUi('src/view/telaClienteEntrar.ui')
+telaClienteCadastrar = uic.loadUi('src/view/telaClienteCadastrar.ui')
+telaReposicaoCedulas = uic.loadUi('src/view/telaReposicaoCedulas.ui')
+telaSucessoOperacao = uic.loadUi('src/view/telaSucessoOperacao.ui')
+telaInsucessoOperacao = uic.loadUi('src/view/telaInsucessoOperacao.ui')
 
 # Conexao com o banco de dados
 
 conn = conectar_banco()
+
 
 def calcularNotas(valorSaque, qtdNotas5, qtdNotas10, qtdNotas20):
     notas20 = min(valorSaque // 20, qtdNotas20)
@@ -54,6 +55,11 @@ def validaLogin():
         clienteSelecionado[3] = registros[0][3]  # endereco
         clienteSelecionado[4] = registros[0][4]  # saldo
         trocaTelas(telaClienteEntrar, telaSaqueDeposito)
+        telaSaqueDeposito.label.setText(f"<html><head/><body><p>SALDO ATUAL: <b>{clienteSelecionado[4]}</b></p><p "
+                                        f"align=\"center\"><span style=\""
+                                        f"font-size:10pt;\">NOTAS DISPONÍVEIS PARA SAQUE:</span></p><p "
+                                        f"align=\"center\"><span style=\" font-size:10pt;\">R$ 5,00 | R$ 10,"
+                                        f"00 | R$ 20,00</span></p></body></html>")
 
 
 def efetuaOperacao():
@@ -75,7 +81,6 @@ def efetuaOperacao():
             sql = "SELECT * FROM nota;"
             cursor.execute(sql)
             registros = cursor.fetchall()
-            print(registros)
             for registro in registros:
                 if registro[1] == 5.00:
                     notas5 = int(registro[2])
@@ -109,7 +114,14 @@ def efetuaOperacao():
                 entrada = (str(clienteSelecionado[4]), str(clienteSelecionado[0]))
                 cursor.execute(sql, entrada)
                 conn.commit()
+                telaSaqueDeposito.label.setText(
+                    f"<html><head/><body><p><b>SALDO ATUAL:</b> <b>{clienteSelecionado[4]}</b></p><p "
+                    f"align=\"center\"><span style=\""
+                    f"font-size:10pt;\">NOTAS DISPONÍVEIS PARA SAQUE:</span></p><p "
+                    f"align=\"center\"><span style=\" font-size:10pt;\">R$ 5,00 | R$ 10,"
+                    f"00 | R$ 20,00</span></p></body></html>")
                 trocaTelas(telaSaqueDeposito, telaSucessoOperacao)
+
 
     # Tipo = Depósito
     elif telaSaqueDeposito.rbDeposito.isChecked():
@@ -120,11 +132,87 @@ def efetuaOperacao():
         entrada = (str(clienteSelecionado[4]), str(clienteSelecionado[0]))
         cursor.execute(sql, entrada)
         conn.commit()
+        telaSucessoOperacao.lblMenu.setText("Depósito realizado com sucesso! Deseja realizar outra operação?")
+        telaSaqueDeposito.label.setText(
+            f"<html><head/><body><p><b>SALDO ATUAL:</b> <b>{clienteSelecionado[4]}</b></p><p "
+            f"align=\"center\"><span style=\""
+            f"font-size:10pt;\">NOTAS DISPONÍVEIS PARA SAQUE:</span></p><p "
+            f"align=\"center\"><span style=\" font-size:10pt;\">R$ 5,00 | R$ 10,"
+            f"00 | R$ 20,00</span></p></body></html>")
         trocaTelas(telaSaqueDeposito, telaSucessoOperacao)
+
+def insereCliente():
+    emailNovoCliente = telaClienteCadastrar.campoEmail.text()
+    senhaNovoCliente = telaClienteCadastrar.campoSenha.text()
+    repeteSenhaNovoCliente = telaClienteCadastrar.campoSenhaRep.text()
+    enderecoNovoCliente = telaClienteCadastrar.campoEndereco.text()
+
+    if emailNovoCliente == "" or senhaNovoCliente == "" or repeteSenhaNovoCliente == "" or enderecoNovoCliente == "":
+        telaClienteCadastrar.lblMensagemErro.setText("Insira campos válidos!")
+    elif senhaNovoCliente != repeteSenhaNovoCliente:
+        telaClienteCadastrar.lblMensagemErro.setText("As senhas não conferem!")
+    else:
+        cursor = conn.cursor()
+        sql = f"SELECT email, senha FROM cliente where email = %s;"
+        entrada = (str(emailNovoCliente),)
+        cursor.execute(sql, entrada)
+        registros = cursor.fetchall()
+        conn.commit()
+
+        if len(registros) > 0:
+            if registros[0][0] == emailNovoCliente:
+                telaClienteCadastrar.lblMensagemErro.setText("Este cliente já está cadastrado!")
+        else:
+            telaClienteCadastrar.lblMensagemErro.setText(f"Cliente {emailNovoCliente} cadastrado!")
+            telaClienteCadastrar.campoEmail.setText("")
+            telaClienteCadastrar.campoSenha.setText("")
+            telaClienteCadastrar.campoSenhaRep.setText("")
+            telaClienteCadastrar.campoEndereco.setText("")
+            cursor = conn.cursor()
+            sql = "INSERT IGNORE INTO cliente (email, senha, endereco, saldo) VALUES (%s,%s,%s,0.00);"
+            entrada = (str(emailNovoCliente), str(senhaNovoCliente), str(enderecoNovoCliente))
+            cursor.execute(sql, entrada)
+            conn.commit()
+
+
+def getQtdCedulas():
+    notas5, notas10, notas20 = 0, 0, 0
+    cursor = conn.cursor()
+    sql = "SELECT * FROM nota;"
+    cursor.execute(sql)
+    registros = cursor.fetchall()
+    for registro in registros:
+        if registro[1] == 5.00:
+            notas5 = int(registro[2])
+        elif registro[1] == 10.00:
+            notas10 = int(registro[2])
+        elif registro[1] == 20.00:
+            notas20 = int(registro[2])
+    return f"<html><head/><body><p>Quantidade atual</p><p>R$ 5.00 = {notas5}</p><p>R$ 10.00 = {notas10}</p><p>R$ " \
+           f"20.00 = {notas20}</p></body></html>"
+
+
+def repoeCedulas():
+    tipoCedula = telaReposicaoCedulas.cbTipoCedula.currentText()
+    try:
+        qtdCedulas = int(telaReposicaoCedulas.campoQuantidade.text())
+        cursor = conn.cursor()
+        sql = "SELECT quantidade FROM nota WHERE valor = %s;"
+        entrada = (str(tipoCedula),)
+        cursor.execute(sql, entrada)
+        registros = cursor.fetchall()
+        conn.commit()
+        novoValor = int(registros[0][0]) + int(qtdCedulas)
+        sql = "UPDATE nota SET quantidade = %s WHERE valor = %s;"
+        entrada = (str(novoValor), str(tipoCedula))
+        cursor.execute(sql, entrada)
+        conn.commit()
+        telaReposicaoCedulas.lblMensagem.setText(getQtdCedulas())
+    except:
+        telaReposicaoCedulas.campoQuantidade.setText("")
 
 
 def trocaTelas(tela01, tela02):
-    print(clienteSelecionado)
     tela01.close()
     tela02.show()
 
@@ -159,6 +247,9 @@ telaSaqueDeposito.btnTouch100.clicked.connect(lambda: addValorFixo(100))
 telaSaqueDeposito.btnTouch150.clicked.connect(lambda: addValorFixo(150))
 telaClienteEntrar.btnLogin.clicked.connect(lambda: validaLogin())
 telaSaqueDeposito.btnEntrar.clicked.connect(lambda: efetuaOperacao())
+telaClienteCadastrar.btnCadastrar.clicked.connect(lambda: insereCliente())
+telaReposicaoCedulas.lblMensagem.setText(getQtdCedulas())
+telaReposicaoCedulas.btnRepor.clicked.connect(lambda: repoeCedulas())
 
 # Navegação entre Telas
 
@@ -174,12 +265,8 @@ telaSucessoOperacao.btnNao.clicked.connect(lambda: trocaTelas(telaSucessoOperaca
 telaInsucessoOperacao.btnSim.clicked.connect(lambda: trocaTelas(telaInsucessoOperacao, telaSaqueDeposito))
 telaInsucessoOperacao.btnNao.clicked.connect(lambda: trocaTelas(telaInsucessoOperacao, telaInicial))
 
-# Operações
+# Tela de Reposição de notas:
 
-
-"""
-<html><head/><body><p><span style=" color:#6fff91;">Notas inseridas com sucesso!</span></p></body></html>
-"""
 
 # Execução do aplicativo
 telaInicial.show()
