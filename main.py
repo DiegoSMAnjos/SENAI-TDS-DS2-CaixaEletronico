@@ -124,6 +124,7 @@ def efetuaOperacao():
                     f"font-size:10pt;\">NOTAS DISPONÍVEIS PARA SAQUE:</span></p><p "
                     f"align=\"center\"><span style=\" font-size:10pt;\">R$ 5,00 | R$ 10,"
                     f"00 | R$ 20,00</span></p></body></html>")
+                telaReposicaoCedulas.lblMensagem.setText(getQtdCedulas())
                 trocaTelas(telaSaqueDeposito, telaSucessoOperacao)
 
 
